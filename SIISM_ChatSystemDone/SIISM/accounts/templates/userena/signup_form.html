@@ -1,0 +1,16 @@
+{% extends 'accounts/base.html' %}
+{% load i18n %}
+{% load crispy_forms_tags %}
+
+{% block title %}{% trans "Signup" %}{% endblock %}
+
+{% block content %}
+<form action="" method="post">
+  {% csrf_token %}
+  <fieldset>
+    <legend>{% trans "Signup" %}</legend>
+    {{ form|crispy }}
+  </fieldset></br>
+  <input class="btn btn-success" type="submit" value="{% trans "Signup"%}" />
+</form>
+{% endblock %}

@@ -1,0 +1,20 @@
+{% extends 'accounts/base.html' %}
+{% load i18n %}
+{% load url from future %}
+{% load crispy_forms_tags %}
+
+{% block title %}{% trans "Signin" %}{% endblock %}
+
+{% block content %}
+<form action="" method="post">
+  {% csrf_token %}
+  <fieldset>
+    <legend>{% trans "Signin" %}</legend>
+    {{ form|crispy }}
+    
+  </fieldset>
+  <input class="btn btn-success" type="submit" value="{% trans "Signin" %}" /></form></br>
+  <p class="forgot-password"><a href="{% url 'userena_password_reset' %}" title="{% trans 'Forgot your password?' %}">{% trans "Forgot your password?" %}</a></p>
+  {% if next %}<input type="hidden" name="next" value="{{ next }}" />{% endif %}
+</form>
+{% endblock %}

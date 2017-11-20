@@ -1,0 +1,26 @@
+{% extends 'accounts/base.html' %}
+
+{% block content %}
+
+<h2>Hi, {{ request.user }}. These are your available Chatees</h2>
+    <table class = "table table-hover table-responsive">
+        <tr>
+            <td>Username</td>
+            <td>First Name</td>
+            <td>Last Name</td>
+        </tr>
+    {% for person in users %}
+        <!--Don't show anonymous user and current user (yourself) to chat to-->
+        {% if person.username != 'AnonymousUser' %}
+            {% if person.username != request.user %}
+		        <tr>
+		            <td><a href="{% url 'chat' username=person.username %}">{{ person.username }}</a></td>
+		            <td>{{ person.first_name }}</td>
+		            <td>{{ person.last_name }}</td>
+		        </tr>
+		    {% endif %}
+        {% endif %}
+    {% endfor %}
+    </table>
+
+{% endblock %}

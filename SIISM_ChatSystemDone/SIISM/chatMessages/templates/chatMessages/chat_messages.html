@@ -1,0 +1,65 @@
+{% extends 'accounts/base.html' %}
+{% url 'chat' username=person.username as current_chat 
+{% load crispy_forms_tags %}
+
+{% block content %}
+
+  <div class = "container-fluid col-sm-7 center">
+  <h3>Chat with {{ request.path|cut:"/chat/" }}</h3>
+
+  <!--form so that current user can send a message. Afterwards, page should be updated to see message again. -->
+   
+  <form class = "form-inline center" method = 'POST' action=''>{% csrf_token %}
+      {{ form|crispy }}</br>
+      <input type = "submit" class = "pull-right btn btn-success" name = "submit" value = "Send Message"/>
+  </form>
+  </div>
+  <hr>
+  <div class = "container-fluid col-sm-7 center">
+  {% for message in messages %}
+
+      {% if message.sender == request.user %}
+     
+	      <div>
+		      <div class = "talk-bubble left-in round border right-top">
+		        <div class = "talktext bold">
+		           <div class = " btn btn-info">
+		              {{ message.sender }}
+		           </div>
+		           <div class = "pull-right right-align">
+		             <strong>{{ message.text }} </strong>
+		             </br>
+		             {{ message.timestamp }}
+		           </div>
+		        </div>
+		      </div>
+	      </div>
+
+	      {% else %}
+
+	      <div class = "">
+              
+		      <div class = "talk-bubble tri-right round border right-top">
+		        <div class = "talktext bold">
+		           <div class = "btn btn-warning pull-right">
+		              {{ message.sender }}
+		           </div>
+		           <strong>{{ message.text }} </strong>
+		           </br>
+		           {{ message.timestamp }}
+		        </div>
+		      </div>
+
+		      
+	      </div>
+      
+      </br>
+
+
+      {% endif %}
+    {% endfor %}
+
+    </div>
+
+
+{% endblock %}
